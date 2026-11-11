@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LKPD JavaScript — String, Number, dan Konversi Data</title>
+<style>
+:root{--blue:#176b87;--light:#e7f3f8;--ink:#202833;--muted:#667085;--line:#d8e0e6;--paper:#fff;--bg:#f2f5f8}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 Arial,Helvetica,sans-serif}
+header{background:linear-gradient(135deg,#145c78,#2388a5);color:white;padding:34px 18px;text-align:center}
+header h1{font-size:clamp(22px,4vw,32px);margin:0 0 6px}header p{margin:0;opacity:.94}
+main{max-width:980px;margin:24px auto;padding:0 14px 40px}.sheet{background:var(--paper);border-radius:14px;padding:clamp(18px,4vw,34px);box-shadow:0 5px 22px #14283b12}
+h2{font-size:19px;margin:30px 0 12px;border-bottom:2px solid var(--light);padding-bottom:7px;color:#164f68}
+h3{font-size:16px;margin:18px 0 8px}.identity,.answer-table{width:100%;border-collapse:collapse;margin:12px 0 18px}
+.identity td,.answer-table td,.answer-table th{border:1px solid var(--line);padding:9px;text-align:left;vertical-align:top}
+.identity td:first-child{width:28%;background:#f7fafc;font-weight:bold}
+.answer-table th{background:#dceef5}.answer-table td:first-child{font-weight:600;width:35%}
+code,pre{font-family:Consolas,monospace}pre{background:#17212b;color:#e8f1f5;padding:15px;border-radius:9px;overflow-x:auto;white-space:pre-wrap}
+.note{background:#f0f8fb;border-left:4px solid var(--blue);padding:11px 14px;border-radius:5px;margin:12px 0}
+.answer{background:#f8fafc;border:1px solid var(--line);padding:10px 12px;border-radius:7px}
+button{border:0;background:var(--blue);color:white;padding:10px 15px;border-radius:7px;font-weight:700;cursor:pointer;margin:5px 4px 5px 0}
+button.secondary{background:#52616d}button:hover{filter:brightness(.93)}
+input{padding:9px;border:1px solid #b9c7d1;border-radius:6px;max-width:100%;width:160px}
+label{display:inline-block;margin:7px 8px 7px 0}.result{font-weight:bold;color:#145c78;margin-top:10px;min-height:24px}
+.reflection li{margin:5px 0}.checks label{display:block}
+footer{text-align:center;color:var(--muted);font-size:12px;margin-top:24px}
+@media print{body{background:white}.sheet{box-shadow:none}header{background:white;color:#111;padding:10px}button,.interactive{display:none!important}main{margin:0;max-width:none}.sheet{padding:0}h2{break-after:avoid}pre{color:#111;background:#f2f2f2}}
+
+.evidence{border:1px dashed #7aa9ba;background:#f7fbfd;border-radius:10px;padding:14px;margin:14px 0 20px}
+.evidence h3{margin:0 0 5px;color:#164f68}.evidence p{margin:0 0 10px;color:#52616d;font-size:13px}
+.evidence input[type=file]{width:100%;max-width:100%;padding:8px;background:white;border:1px solid #cbd5dc;border-radius:7px}
+.evidence-actions{margin-top:8px}.evidence-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px;margin-top:12px}
+.evidence-item{background:white;border:1px solid #d8e0e6;border-radius:8px;padding:7px;min-width:0}
+.evidence-item img{width:100%;height:125px;object-fit:contain;background:#eef2f4;border-radius:5px}
+.evidence-item small{display:block;overflow-wrap:anywhere;color:#52616d;margin:5px 0}
+.evidence-item button{font-size:12px;padding:6px 9px}.evidence-status{font-size:12px;color:#176b87;margin-top:7px}
+
+</style>
+</head>
+<body>
+<header>
+  <h1>LEMBAR KERJA PESERTA DIDIK (LKPD)</h1>
+  <p>JavaScript — String, Number, dan Konversi Data</p>
+</header>
+<main><div class="sheet">
+<table class="identity">
+<tr><td>Satuan Pendidikan</td><td>SMKN 1 GARUT</td></tr>
+<tr><td>Mata Pelajaran</td><td>Dasar-Dasar Pengembangan Perangkat Lunak dan Gim</td></tr>
+<tr><td>Kelas/Fase</td><td>X / Fase E</td></tr>
+<tr><td>Alokasi Waktu</td><td>2 × 45 menit</td></tr>
+<tr><td>Nama</td><td>Fathier Alifan Janioreva</td></tr>
+<tr><td>Kelas / No. Absen</td><td>X PPL 2/9</td></tr>
+<tr><td>Tanggal</td><td>29 Oktober</td></tr>
+</table>
+
+<h2>A. Tujuan Pembelajaran</h2>
+<p>Setelah menyelesaikan LKPD ini, peserta didik mampu membedakan String dan Number, menjelaskan bahwa <code>prompt()</code> menghasilkan String, menggunakan <code>Number()</code> dan <code>String()</code>, menganalisis kesalahan tipe data, serta membuat program input dan perhitungan sederhana.</p>
+
+<h2>B. Petunjuk Kerja</h2>
+<div class="note">Setelah praktik coding pada aktivitas C sampai G, ambil screenshot hasilnya lalu unggah pada kotak <strong>Bukti Praktik</strong> di bawah aktivitas terkait. Foto disimpan di browser/perangkat yang sama.</div>
+<ul><li>Kerjakan secara mandiri terlebih dahulu.</li><li>Prediksi hasil sebelum menjalankan kode.</li><li>Jalankan kode dan amati hasilnya.</li><li>Diskusikan melalui Think Pair Share.</li><li>Simpan file LKPD setelah selesai.</li></ul>
+
+<h2>C. Aktivitas 1 — Eksperimen 10 + 20</h2>
+<pre>let a = "10";
+let b = "20";
+console.log(a + b);</pre>
+<table class="answer-table">
+<tr><th>Pertanyaan</th><th>Jawaban</th></tr>
+<tr><td>Apa output program?</td><td><strong>"1020"</strong></td></tr>
+<tr><td>Mengapa hasil tersebut terjadi?</td><td>Karena a dan b berupa String. Operator <code>+</code> menggabungkan teks jika kedua nilainya String.</td></tr>
+<tr><td>Apakah a dan b bertipe Number?</td><td>Tidak. Keduanya bertipe String karena nilainya ditulis di dalam tanda kutip.</td></tr>
+</table>
+</div>
+<div class="interactive">
+<button onclick="document.getElementById('c-result').textContent='Output: 1020'">Uji kode Aktivitas 1</button>
+<div class="result" id="c-result"></div>
+</div>
+<p><strong>Uji sekarang. Apakah prediksimu benar? Jelaskan.</strong></p>
+<div class="answer">Ya, prediksi saya benar. Hasilnya 1020 karena kedua variabel bertipe String sehingga angka digabungkan sebagai teks, bukan dijumlahkan.</div>
+<div class="evidence" data-evidence="C">
+  <h3>📷 Bukti Praktik — Aktivitas 1</h3>
+  <img src="ss1.png"
+
+  <input
+    type="file"
+    accept="image/*"
+    multiple
+    aria-label="Upload bukti Aktivitas 1"
+  >
+
+
+  <div class="evidence-gallery"></div>
+</div>
+<h2>D. Aktivitas 2 — Menemukan Tipe Data</h2>
+<pre>let nama = "Asep";
+let umur = 16;
+console.log(typeof nama);
+console.log(typeof umur);</pre>
+
+<div class="evidence" data-evidence="D">
+  <h3>📷 Bukti Praktik — Aktivitas 2 — Menemukan Tipe Data</h3>
+  <img src="ss2.png"
+  <div class="evidence-gallery"></div>
+</div>
+<table class="answer-table">
+<tr><th>Variabel</th><th>Prediksi</th><th>Hasil typeof</th><th>Kesimpulan</th></tr>
+<tr><td>nama</td><td>String</td><td><code>string</code></td><td>Berisi teks.</td></tr>
+<tr><td>umur</td><td>Number</td><td><code>number</code></td><td>Berisi angka.</td></tr>
+</table>
+<p><strong>Temuan: Apa perbedaan String dan Number berdasarkan eksperimen?</strong></p>
+<div class="answer">String digunakan untuk menyimpan teks atau kumpulan karakter, sedangkan Number digunakan untuk menyimpan nilai angka yang dapat dihitung.</div>
+
+<h2>E. Aktivitas 3 — Konversi String Menjadi Number</h2>
+<p>Perbaiki program agar menghasilkan 30. Gunakan <code>Number()</code>.</p>
+<pre>let a = "10";
+let b = "20";
+let hasil = Number(a) + Number(b);
+console.log(hasil);</pre>
+
+<div class="evidence" data-evidence="E">
+  <h3>📷 Bukti Praktik — Aktivitas 3 — Konversi String Menjadi Number</h3>
+  <img src="ss3.png"
+  <input type="file" accept="image/*" multiple aria-label="Unggah screenshot bukti Aktivitas 3 — Konversi String Menjadi Number">
+  <div class="evidence-actions">
+  <div class="evidence-gallery"></div>
+</div>
+<p><strong>Catat hasil program:</strong> <span class="answer">30</span></p>
+<div class="interactive">
+<button onclick="document.getElementById('e-result').textContent='Output: '+(Number('10')+Number('20'))">Jalankan kode Aktivitas 3</button>
+<div class="result" id="e-result"></div>
+</div>
+
+<h2>F. Aktivitas 4 — Program Kasir Sederhana</h2>
+<p>Program meminta harga barang dan jumlah barang, mengubah keduanya menjadi Number, lalu menghitung total harga.</p>
+<pre>let harga = Number(prompt("Masukkan harga: "));
+let jumlah = Number(prompt("Masukkan jumlah: "));
+let total = harga * jumlah;
+console.log("Total belanja = " + total);</pre>
+<div class="interactive">
+<h3>Coba program kasir</h3>
+<label>Harga barang (Rp)<br><input id="harga" type="number" min="0" value="10000"></label>
+<label>Jumlah barang<br><input id="jumlah" type="number" min="0" value="3"></label><br>
+<button onclick="hitungKasir()">Hitung total</button>
+<div class="result" id="kasir-result"></div>
+</div>
+
+<div class="evidence" data-evidence="F">
+  <h3>📷 Bukti Praktik — Aktivitas 4 — Program Kasir Sederhana</h3>
+  <img src="ss4.png"
+  <input type="file" accept="image/*" multiple aria-label="Unggah screenshot bukti Aktivitas 4 — Program Kasir Sederhana">
+  <div class="evidence-actions">
+  </div>
+  <div class="evidence-status" aria-live="polite"></div>
+  <div class="evidence-gallery"></div>
+</div>
+<table class="answer-table">
+<tr><th>Input Uji</th><th>Nilai</th></tr>
+<tr><td>Harga</td><td>Rp10.000</td></tr>
+<tr><td>Jumlah</td><td>3</td></tr>
+<tr><td>Total seharusnya</td><td>Rp30.000</td></tr>
+<tr><td>Total program</td><td>Rp30.000</td></tr>
+</table>
+
+<h2>G. Tantangan — Program Hitung Nilai</h2>
+<p>Buat program dengan input nilai tugas, UTS, dan UAS. Konversikan semua input menggunakan <code>Number()</code>, lalu hitung rata-rata dengan rumus (tugas + UTS + UAS) / 3.</p>
+<p><strong>Algoritma saya:</strong></p>
+<ol>
+<li>Meminta pengguna memasukkan nilai tugas, UTS, dan UAS.</li>
+<li>Mengubah semua input menjadi tipe Number.</li>
+<li>Menjumlahkan ketiga nilai.</li>
+<li>Membagi hasil penjumlahan dengan 3, lalu menampilkan rata-rata.</li>
+</ol>
+<pre>let tugas = Number(prompt("Nilai tugas:"));
+let uts = Number(prompt("Nilai UTS:"));
+let uas = Number(prompt("Nilai UAS:"));
+let rataRata = (tugas + uts + uas) / 3;
+console.log("Rata-rata = " + rataRata);</pre>
+
+<div class="evidence" data-evidence="G">
+  <div class="evidence-actions">
+  <div class="evidence-gallery"></div>
+</div>
+<div class="interactive">
+<h3>Coba hitung rata-rata nilai</h3>
+<label>Tugas<br><input id="tugas" type="number" min="0" max="100" value="80"></label>
+<label>UTS<br><input id="uts" type="number" min="0" max="100" value="85"></label>
+<label>UAS<br><input id="uas" type="number" min="0" max="100" value="90"></label><br>
+<button onclick="hitungNilai()">Hitung rata-rata</button>
+<div class="result" id="nilai-result"></div>
+</div>
+<h3>Bukti Screenshot Aktivitas G</h3>
+
+<img src="ss5.png"
+
+<img src="ss6.png"
+<h2>H. Think — Pair — Share</h2>
+<table class="answer-table">
+<tr><th>Pertanyaan</th><th>Jawaban</th></tr>
+<tr><td>Mengapa <code>prompt()</code> perlu dikonversi jika hasilnya ingin dihitung?</td><td>Karena <code>prompt()</code> menghasilkan String. Agar dapat dihitung sebagai angka, nilainya perlu diubah menggunakan <code>Number()</code>.</td></tr>
+<tr><td>Apa perbedaan "10" dengan 10?</td><td>"10" adalah String karena memakai tanda kutip, sedangkan 10 adalah Number karena berupa angka tanpa tanda kutip.</td></tr>
+<tr><td>Apa yang terjadi jika lupa Number()?</td><td>Nilai input tetap berupa String. Jika dijumlahkan dengan <code>+</code>, hasilnya bisa digabungkan sebagai teks, bukan dijumlahkan.</td></tr>
+</table>
+<p><strong>Pair:</strong> Bandingkan jawaban dengan teman. Apakah sama? Mengapa bisa berbeda?</p>
+<div class="answer">Jawaban bisa sama atau berbeda karena setiap orang dapat menggunakan kata-kata yang berbeda, tetapi inti penjelasannya tetap sama jika memahami tipe data.</div>
+<p><strong>Share:</strong> Sampaikan satu temuan penting kepada kelas.</p>
+<div class="answer">Temuan penting saya adalah input dari <code>prompt()</code> harus dikonversi menjadi Number jika ingin digunakan dalam perhitungan angka.</div>
+
+<h2>I. Refleksi 3–2–1</h2>
+<p><strong>3 hal yang saya pahami:</strong></p>
+<ol class="reflection"><li>String digunakan untuk menyimpan teks.</li><li>Number digunakan untuk menyimpan angka.</li><li><code>Number()</code> dapat mengubah String angka menjadi Number.</li></ol>
+<p><strong>2 hal yang masih membingungkan:</strong></p>
+<ol class="reflection"><li>Perbedaan konversi otomatis dan konversi manual.</li><li>Penanganan input yang bukan angka.</li></ol>
+<p><strong>1 hal yang ingin saya coba pada program berikutnya:</strong></p>
+<div class="answer">Saya ingin mencoba membuat program kalkulator sederhana menggunakan JavaScript.</div>
+
+<h2>J. Penilaian Diri</h2>
+<p>Centang sesuai pemahamanmu setelah mengerjakan LKPD.</p>
+<div class="checks">
+<label><input type="checkbox"> Saya dapat membedakan String dan Number.</label>
+<label><input type="checkbox"> Saya memahami <code>prompt()</code> menghasilkan String.</label>
+<label><input type="checkbox"> Saya dapat menggunakan <code>Number()</code>.</label>
+<label><input type="checkbox"> Saya dapat menggunakan <code>String()</code>.</label>
+<label><input type="checkbox"> Saya dapat menemukan kesalahan tipe data.</label>
+<label><input type="checkbox"> Saya dapat membuat program input dan hitung sederhana.</label>
+</div>
+
+<h2>K. Rubrik Penilaian Praktik</h2>
+<table class="answer-table">
+<tr><th>Aspek</th><th>4 — Sangat Baik</th><th>3 — Baik</th><th>2 — Cukup</th><th>1 — Perlu Bimbingan</th></tr>
+<tr><td>Tipe data</td><td>Menjelaskan dan membedakan String/Number dengan benar.</td><td>Benar dengan sedikit arahan.</td><td>Masih ada kekeliruan.</td><td>Belum memahami.</td></tr>
+<tr><td>Konversi</td><td>Tepat dan mandiri.</td><td>Benar dengan sedikit arahan.</td><td>Beberapa kesalahan.</td><td>Belum mampu.</td></tr>
+<tr><td>Program</td><td>Berjalan benar dan rapi.</td><td>Sedikit kesalahan.</td><td>Berjalan sebagian.</td><td>Belum berjalan.</td></tr>
+<tr><td>Pemecahan masalah</td><td>Menemukan dan memperbaiki kesalahan secara mandiri.</td><td>Membutuhkan sedikit bantuan.</td><td>Membutuhkan banyak bantuan.</td><td>Belum mampu.</td></tr>
+</table>
+<p><strong>Catatan Guru:</strong></p>
+<p>....................................................................................................................................................</p>
+<p>....................................................................................................................................................</p>
+
+<div class="interactive" style="margin-top:25px">
+<button onclick="window.print()">Cetak / Simpan sebagai PDF</button>
+<button class="secondary" onclick="location.reload()">Atur ulang contoh</button>
+</div>
+</div>
+<footer>LKPD JavaScript — String, Number, dan Konversi Data | SMKN 1 GARUT</footer>
+</main>
+<script>
+function rupiah(n){return new Intl.NumberFormat('id-ID').format(n)}
+function hitungKasir(){
+ const h=Number(document.getElementById('harga').value);
+ const j=Number(document.getElementById('jumlah').value);
+ const out=document.getElementById('kasir-result');
+ if(document.getElementById('harga').value===''||document.getElementById('jumlah').value===''||h<0||j<0){out.textContent='Masukkan harga dan jumlah yang valid.';return}
+ out.textContent='Total belanja = Rp'+rupiah(h*j);
+}
+function hitungNilai(){
+ const ids=['tugas','uts','uas'];
+ const vals=ids.map(id=>document.getElementById(id).value);
+ const out=document.getElementById('nilai-result');
+ if(vals.some(v=>v===''||Number(v)<0||Number(v)>100)){out.textContent='Masukkan semua nilai dari 0 sampai 100.';return}
+ const avg=vals.reduce((sum,v)=>sum+Number(v),0)/3;
+ out.textContent='Nilai rata-rata = '+avg.toFixed(2);
+}
+</script>
+
+<script>
+(function(){
+ const DB_NAME='lkpd_bukti_praktik_v1', STORE='photos';
+ function openDB(){
+  return new Promise((resolve,reject)=>{
+   const req=indexedDB.open(DB_NAME,1);
+   req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains(STORE))req.result.createObjectStore(STORE,{keyPath:'id',autoIncrement:true})};
+   req.onsuccess=()=>resolve(req.result); req.onerror=()=>reject(req.error);
+  });
+ }
+ async function allFor(section){
+  const db=await openDB();
+  return new Promise((resolve,reject)=>{
+   const tx=db.transaction(STORE,'readonly'), req=tx.objectStore(STORE).getAll();
+   req.onsuccess=()=>resolve(req.result.filter(x=>x.section===section));
+   req.onerror=()=>reject(req.error);
+  });
+ }
+ async function savePhoto(section,file){
+  const db=await openDB();
+  return new Promise((resolve,reject)=>{
+   const tx=db.transaction(STORE,'readwrite');
+   tx.objectStore(STORE).add({section,name:file.name||'screenshot',type:file.type,blob:file,created:Date.now()});
+   tx.oncomplete=resolve; tx.onerror=()=>reject(tx.error);
+  });
+ }
+ async function removePhoto(id){
+  const db=await openDB();
+  return new Promise((resolve,reject)=>{
+   const tx=db.transaction(STORE,'readwrite');tx.objectStore(STORE).delete(id);
+   tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);
+  });
+ }
+ function downloadBlob(blob,name){
+  const url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1500);
+ }
+ async function render(box){
+  const section=box.dataset.evidence, gallery=box.querySelector('.evidence-gallery');
+  const status=box.querySelector('.evidence-status');
+  gallery.replaceChildren();
+  const photos=await allFor(section);
+  status.textContent=photos.length ? photos.length+' foto bukti tersimpan di browser ini.' : 'Belum ada foto bukti.';
+  photos.forEach(photo=>{
+   const item=document.createElement('div');item.className='evidence-item';
+   const img=document.createElement('img');img.alt='Preview '+photo.name;img.src=URL.createObjectURL(photo.blob);
+   const small=document.createElement('small');small.textContent=photo.name;
+   const del=document.createElement('button');del.type='button';del.className='secondary';del.textContent='Hapus foto';
+   del.onclick=async()=>{await removePhoto(photo.id);render(box)};
+   const down=document.createElement('button');down.type='button';down.textContent='Unduh';
+   down.onclick=()=>downloadBlob(photo.blob,photo.name);
+   item.append(img,small,down,del);gallery.append(item);
+  });
+ }
+ document.querySelectorAll('.evidence').forEach(box=>{
+  const input=box.querySelector('input[type=file]');
+  input.addEventListener('change',async()=>{
+   const files=Array.from(input.files||[]);
+   try{
+    for(const file of files){if(!file.type.startsWith('image/'))continue;await savePhoto(box.dataset.evidence,file)}
+    await render(box);
+   }catch(e){box.querySelector('.evidence-status').textContent='Gagal menyimpan foto. Coba gambar yang ukurannya lebih kecil.'}
+   input.value='';
+  });
+  box.querySelector('.export-evidence').addEventListener('click',async()=>{
+   const photos=await allFor(box.dataset.evidence);
+   if(!photos.length){box.querySelector('.evidence-status').textContent='Belum ada foto untuk diunduh.';return}
+   photos.forEach((p,i)=>downloadBlob(p.blob,box.dataset.evidence+'_bukti_'+(i+1)+'_'+p.name));
+  });
+  render(box).catch(()=>{box.querySelector('.evidence-status').textContent='Penyimpanan browser tidak tersedia.'});
+ });
+})();
+</script>
+</body>
+</html>
